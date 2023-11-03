@@ -1,5 +1,6 @@
 function init() {
   produkDatatable = $("#tableProduk").DataTable();
+ $("#tableModalBahan").DataTable();
   //   bahanDatatable = bahanTable.DataTable()
   //   selectedBahanDatatable = selectedBahanTable.DataTable()
 
@@ -366,8 +367,8 @@ function cetak()
 
   $("#cetak").modal("show");
 
-   $("#namaProduk").val();
-   $("#kodeProduk").val();
-   $("#jumlahProduk").val();
+   $("#namaProduk").val("");
+   $("#kodeProduk").val("");
+   $("#jumlahProduk").val("");
    $("#tableBahan #bodyBahan").empty();
 }

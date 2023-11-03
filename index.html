@@ -99,8 +99,8 @@
                 </table>
                 <div class="row">
                     <div class="col-12 mb-3 d-flex justify-content-end">
-                        <button onclick="modalCetak()" class="btn btn-primary">
-                            <i class="fa fa-spinner" aria-hidden="true"></i> Cetak 
+                        <button onclick="modalCetak()" class="btn btn-success">
+                            <i class="fa fa-save" aria-hidden="true"></i> Simpan Data
                         </button>
                     </div>
                 </div>
@@ -146,13 +146,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <table id="tableModalBahan" class="table table-sm table-bordered table-striped" style="padding-top: 15px; padding-bottom: 10px;" width="100%">
+                <table id="tableModalBahan" class="table table-sm table table-hover text-center" style="padding-top: 15px; padding-bottom: 10px;" width="100%">
                     <thead>
                         <tr>
-                            <td class=" bg-dark text-white">Kode Bahan</td>
-                            <td class=" bg-dark text-white">Nama Bahan</td>
-                            <td class=" bg-dark text-white">Jumlah</td>
-                            <td class="text-center bg-dark text-white">Aksi</td>
+                            <td class=" bg-secondary text-white text-center">Kode Bahan</td>
+                            <td class=" bg-secondary text-white text-center">Nama Bahan</td>
+                            <td class=" bg-secondary text-white text-center">Jumlah</td>
+                            <td class="bg-secondary text-white text-center">Aksi</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -177,6 +177,16 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>B003</td>
+                            <td>Kulit kebab</td>
+                            <td>80</td>
+                            <td class="text-center">
+                                <button data-kode="B003" data-nama="Kulit kebab" data-jumlah="80" class="btn btn-sm btn-success btnBahan">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>B004</td>
                             <td>Sayur</td>
                             <td>20</td>
@@ -192,6 +202,16 @@
                             <td>30</td>
                             <td class="text-center">
                                 <button data-kode="B005" data-nama="Ikan" data-jumlah="30" class="btn btn-sm btn-success btnBahan">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>B006</td>
+                            <td>Danging</td>
+                            <td>50</td>
+                            <td class="text-center">
+                                <button data-kode="B006" data-nama="Danging" data-jumlah="50" class="btn btn-sm btn-success btnBahan">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </td>
