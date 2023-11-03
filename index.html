@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tugas Mentoring 18</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/r-2.5.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-header text-center">
+              <b>Tugas Mentoring 18</b>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-2">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-cube"></i></span>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
+                            Pilih Produk
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="idProduk" aria-describedby="emailHelp" disabled placeholder="Kode Produk">
+                        <input type="text" class="form-control" id="kodeProduk" aria-describedby="emailHelp" disabled placeholder="Kode Produk">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="namaProduk" aria-describedby="emailHelp" disabled placeholder="Nama Produk">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Qty</span>
+                        <input type="text" id="jumlahProduk" class="form-control validateJumlah" placeholder="Qty" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-2">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-cubes"></i></span>
+                        <button id="bahanModals" type="button" class="btn btn-success">
+                            Pilih Bahan
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="kodeBahan" aria-describedby="emailHelp" placeholder="Kode Bahan" disabled>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="namaBahan" aria-describedby="emailHelp" placeholder="Nama Bahan" disabled>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Qty</span>
+                        <input type="text" id="jumlahBahan" class="form-control" placeholder="Total Stok" aria-label="Username" aria-describedby="basic-addon1" disabled>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button id="tambahBahan" type="button" class="btn btn-primary"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- tabel -->
+            <hr>
+            <div class="container">
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <h6 class="">List data bahan</h6>
+                    </div>
+                    <hr>
+                </div>
+                <table id="tableBahan" class="table table-sm align-middle" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col" width="30%">Kode Bahan</th>
+                            <th scope="col" width="35%">Nama Bahan</th>
+                            <th scope="col" width="20%" class="text-center">Kebutuhan Stok</th>
+                            <th scope="col" width="15%" class="text-center">Hapus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyBahan" class="table-group-divider">
+                        <tr id="empty-data">
+                            <td class="text-center" colspan="4">Data masih kosong</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-12 mb-3 d-flex justify-content-end">
+                        <button onclick="modalCetak()" class="btn btn-primary">
+                            <i class="fa fa-spinner" aria-hidden="true"></i> Cetak 
+                        </button>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+
+    <!-- Modal Produk-->
+    <div class="modal fade" id="productModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="staticBackdropLabel">Data Produk</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="tableProduk" class="table table-sm table table-hover text-center" style="padding-top: 15px; padding-bottom: 10px;" width="100%">
+                    <thead>
+                        <tr>
+                            <td class=" bg-secondary text-white text-center">Kode Produk</td>
+                            <td class=" bg-secondary text-white text-center">Nama Produk</td>
+                            <td class="text-center bg-secondary text-white">Aksi</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal Bahan-->
+    <div class="modal fade" id="bahanModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="staticBackdropLabel">Data Bahan</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="tableModalBahan" class="table table-sm table-bordered table-striped" style="padding-top: 15px; padding-bottom: 10px;" width="100%">
+                    <thead>
+                        <tr>
+                            <td class=" bg-dark text-white">Kode Bahan</td>
+                            <td class=" bg-dark text-white">Nama Bahan</td>
+                            <td class=" bg-dark text-white">Jumlah</td>
+                            <td class="text-center bg-dark text-white">Aksi</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>B001</td>
+                            <td>Roti</td>
+                            <td>20</td>
+                            <td class="text-center">
+                                <button data-kode="B001" data-nama="Roti" data-jumlah="20" class="btn btn-sm btn-success btnBahan">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>B002</td>
+                            <td>Ayam</td>
+                            <td>20</td>
+                            <td class="text-center">
+                                <button data-kode="B002" data-nama="Ayam" data-jumlah="20" class="btn btn-sm btn-success btnBahan">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>B004</td>
+                            <td>Sayur</td>
+                            <td>20</td>
+                            <td class="text-center">
+                                <button data-kode="B004" data-nama="Sayur" data-jumlah="20" class="btn btn-sm btn-success btnBahan">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>B005</td>
+                            <td>Ikan</td>
+                            <td>30</td>
+                            <td class="text-center">
+                                <button data-kode="B005" data-nama="Ikan" data-jumlah="30" class="btn btn-sm btn-success btnBahan">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal Cetak-->
+    <div class="modal fade" id="cetak" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="staticBackdropLabel">Hasil cetak produk dan bahan</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <fieldset disabled>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="disabledTextInput" class="form-label">Kode Produk</label>
+                                        <input type="text" id="cetakKode" class="form-control" placeholder="Disabled input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="disabledTextInput" class="form-label">Nama Produk</label>
+                                        <input type="text" id="cetakNama" class="form-control" placeholder="Disabled input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="disabledTextInput" class="form-label">Jumlah Produk</label>
+                                        <input type="text" id="cetakJumlah" class="form-control" placeholder="Disabled input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div id="modalDataBahan"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.6/r-2.5.0/sl-1.7.0/datatables.min.js"></script>
+  <script src="assets/index.js"></script>
+</html>
