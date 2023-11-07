@@ -8,6 +8,56 @@ function init() {
   //   fetchBahan()
 }
 
+function addProduct(){
+  $("#productModal").modal("hide");
+  $("#addProduct").modal("show");
+  $("#formAddProduct").on("submit", function (e) {
+    e.preventDefault();
+    var kode = $("#kodeProdukAdd").val();
+    var nama = $("#namaProdukAdd").val();
+    var kategori = $("#categoryAdd").val();
+    var price = $("#hargaProdukAdd").val();
+    var quantity = 0;
+    var description = $("#descriptionAdd").val();
+
+    $.ajax({
+      url: "http://localhost/mentoring/Tugas-Mentoring-19-API/api/v2/products",
+      method: "POST",
+      dataType: "json",
+      data: {
+        code_product: kode,
+        product_name: nama,
+        category_id: kategori,
+        price: price,
+        quantity: quantity,
+        description: description,
+      },
+      success: function (response) {
+        if (response.data.status === true) {
+          Swal.fire({
+            icon: "success",
+            title: "Berhasil",
+            text: "Produk berhasil ditambahkan.",
+            showConfirmButton: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $("#addProduct").modal("hide");
+              $("#formAddProduct").trigger("reset");
+              fetchProduk();
+              $("#productModal").modal("show");
+            }
+          });
+        } else {
+          console.error("Gagal menambahkan produk: Status false.");
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Gagal menambahkan produk: " + error);
+      },
+    });
+  });
+}
+
 // Fetchings
 var produk = [];
 function fetchProduk() {
@@ -32,7 +82,8 @@ function fetchProduk() {
           produkDatatable.row.add([
             kode,
             nama,
-            `<button class="btn btn-sm btn-success btnProduk" onclick="selectProduk('${id}')"><i class="fa fa-plus"></i></button>`,
+            `<button class="btn btn-sm btn-warning text-white btnProduk" onclick="selectProduk('${id}')"><i class="fa fa-plus"></i></button>
+            <button class="btn btn-sm btn-danger btnProduk" onclick="hapusProduk('${id}')"><i class="fa fa-trash"></i></button>`,
           ]);
         }
 
@@ -90,6 +141,7 @@ function selectProduk(kode) {
             });
         }
         $("#productModal").modal("hide");
+        $("#jumlahProduk").focus();
       },
       error: function (xhr, status, error) {
         $("#productModal").modal("hide");
@@ -111,8 +163,62 @@ function selectProduk(kode) {
   }
 }
 
+function hapusProduk(kode) {
+  var idProduk = $("#idProduk").val();
+  if(idProduk === kode) {
+    Swal.fire({
+      icon: "warning",
+      title: "Produk Sedang dipilih",
+      text: "Mohon pilih produk lain terlebih dahulu sebelum menghapus produk ini.",
+      showConfirmButton: true,
+    });
+  }else{
+    Swal.fire({
+      icon: "warning",
+      title: "Hapus Produk",
+      text: "Apakah anda yakin ingin menghapus produk ini?",
+      showConfirmButton: true,
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url:
+            "http://localhost/mentoring/Tugas-Mentoring-19-API/api/v2/products/" +
+            kode,
+          method: "DELETE",
+          dataType: "json",
+          success: function (response) {
+            if (response.status === true) {
+              Swal.fire({
+                icon: "success",
+                title: "Berhasil",
+                text: "Produk berhasil dihapus.",
+                showConfirmButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  fetchProduk();
+                }
+              });
+            } else {
+              console.error("Gagal menghapus produk: Status false.");
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error("Gagal menghapus produk: " + error);
+          },
+        });
+      }
+    });
+  }
+}
+
 $(document).ready(function () {
   init();
+  $('#hargaProdukAdd').on("input", function () {
+    var inputValue = $(this).val();
+    var numericValue = inputValue.replace(/[^0-9]/g, "");
+    $(this).val(numericValue);
+  });
   $("#bahanModals").click(function () {
     var produkValue = $("#namaProduk").val();
 
@@ -325,7 +431,7 @@ function modalCetak() {
       });
     },
     error: function (xhr, status, error) {
-      // Handle error (misalnya, tampilkan pesan kesalahan)
+      // Handle error
       console.error("Gagal menyimpan data ke database: " + error);
       Swal.fire({
         icon: "error",
