@@ -21,7 +21,7 @@ function addProduct(){
     var description = $("#descriptionAdd").val();
 
     $.ajax({
-      url: "http://localhost/mentoring/Tugas-Mentoring-19-API/api/v2/products",
+      url: "https://yusuf.doxxa.my.id/api/v2/products",
       method: "POST",
       dataType: "json",
       data: {
@@ -62,7 +62,7 @@ function addProduct(){
 var produk = [];
 function fetchProduk() {
   $.ajax({
-    url: "http://localhost/mentoring/Tugas-Mentoring-19-API/api/v2/products",
+    url: "https://yusuf.doxxa.my.id/api/v2/products",
     method: "GET",
     dataType: "json",
     success: function (response) {
@@ -111,7 +111,7 @@ function selectProduk(kode) {
 
     $.ajax({
       url:
-        "http://localhost/mentoring/Tugas-Mentoring-19-API/api/v2/ingredients/" + kode,
+        "https://yusuf.doxxa.my.id/api/v2/ingredients/" + kode,
       method: "GET",
       dataType: "json",
       success: function (response) {
@@ -183,7 +183,7 @@ function hapusProduk(kode) {
       if (result.isConfirmed) {
         $.ajax({
           url:
-            "http://localhost/mentoring/Tugas-Mentoring-19-API/api/v2/products/" +
+            "https://yusuf.doxxa.my.id/api/v2/products/" +
             kode,
           method: "DELETE",
           dataType: "json",
@@ -413,7 +413,7 @@ function modalCetak() {
   });
 
   $.ajax({
-    url: 'http://localhost/mentoring/Tugas-Mentoring-19-API/api/v2/ingredients/', 
+    url: 'https://yusuf.doxxa.my.id/api/v2/ingredients/', 
     method: 'POST',
     data: JSON.stringify(dataToSend),
     contentType: 'application/json',
